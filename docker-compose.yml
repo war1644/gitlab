@@ -1,0 +1,33 @@
+#version: '3.1'
+services:
+    image: twang2218/gitlab-ce-zh
+    container_name: gitlab
+    # 更友好的自重启
+    restart: unless-stopped
+    hostname: git.a.net
+    # 环境变量
+    environment:
+        TEST: "test"
+        TZ: "Asia/Shanghai"
+        #GITLAB_OMNIBUS_CONFIG: |
+            #external_url 'http://git.a.net'
+            #gitlab_rails['time_zone'] = 'Asia/Shanghai'
+            #gitlab_rails['smtp_enable'] = true
+            #gitlab_rails['smtp_address'] = "smtp.partner.outlook.cn"
+            #gitlab_rails['smtp_port'] = 25
+            #gitlab_rails['smtp_user_name'] = "tech@a.net"
+            #gitlab_rails['smtp_password'] = "a123456"
+            #gitlab_rails['gitlab_email_from'] = 'git@a.net'
+    #links:
+    #    - php
+    ports:
+        - "88:80"
+        - "448:443"
+        - "22:22"
+    # 映射挂载
+    volumes:
+        - "/dxq/docker/gitlab/config:/etc/gitlab"
+        - "/dxq/docker/gitlab/data:/var/opt/gitlab"
+        - "/dxq/docker/gitlab/logs:/var/log/gitlab"
+        #- "/www/ucse/:/var/www/"
+        #- "/var/logs/nginx/:/var/log/nginx/"
